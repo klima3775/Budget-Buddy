@@ -1,0 +1,20 @@
+.add-card-btn .form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.addCard {
+  width: 328px;
+  height: 193px;
+  background-color: #ffffff59;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.addCard:hover {
+  background-color: #ffffff28;
+  transition: 0.3s;
+}
