@@ -1,9 +1,28 @@
 import "./CardBlock.scss";
-import AddCardBtnProps from "../../Components/AddCardBtn/AddCardBtn";
-const CardBlock = () => {
+import Card from "../../Components/Card/Card";
+import AddCardBtn from "../../Components/AddCardBtn/AddCardBtn";
+import { useState } from "react";
+
+interface CardBlockProps {
+  title: string;
+  icon: string;
+  backgroundColor: string;
+}
+
+const CardBlock: React.FC = () => {
+  const [cards, setCards] = useState<CardBlockProps[]>([]);
+
+  const addCard = (title: string, icon: string, backgroundColor: string) => {
+    const newCard: CardBlockProps = { title, icon, backgroundColor };
+    setCards([newCard, ...cards]);
+  };
+
   return (
     <div className="card-block">
-      <AddCardBtnProps onAddCard={(title, icon, backgroundColor) => {}} />
+      {cards.map((card, index) => (
+        <Card key={index} {...card} />
+      ))}
+      <AddCardBtn onAddCard={addCard} />
     </div>
   );
 };
