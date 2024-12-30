@@ -1,51 +1,38 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./AddCardBtn.scss";
 import { ReactComponent as Plus } from "../../assets/cards/Plus.svg";
+import FormCard from "../FormCard/FormCard";
 
 interface AddCardBtnProps {
   onAddCard: (title: string, icon: string, backgroundColor: string) => void;
 }
 
-const AddCardBtn = ({ onAddCard }: AddCardBtnProps) => {
+const AddCardBtn: React.FC<AddCardBtnProps> = ({ onAddCard }) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const [title, setTitle] = useState("");
-  const [icon, setIcon] = useState("");
-  const [backgroundColor, setBackgroundColor] = useState("");
 
-  const handleAddCard = () => {
-    onAddCard(title, icon, backgroundColor);
-    setTitle("");
-    setIcon("");
-    setBackgroundColor("");
+  const handleAddCard = (cardData: {
+    name: string;
+    number: string;
+    type: string;
+    balance: string;
+  }) => {
+    const newCard = {
+      title: cardData.name,
+      icon: "", // Подставьте логику выбора иконки, если нужно
+      backgroundColor: "#ccc", // Установите цвет по умолчанию
+    };
+    onAddCard(newCard.title, newCard.icon, newCard.backgroundColor);
     setIsFormVisible(false);
   };
 
   return (
     <div className="add-card-btn">
       {isFormVisible ? (
-        <div className="form">
-          <input
-            type="text"
-            placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Icon URL"
-            value={icon}
-            onChange={(e) => setIcon(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Background Color"
-            value={backgroundColor}
-            onChange={(e) => setBackgroundColor(e.target.value)}
-          />
-          <button onClick={handleAddCard}>Add Card</button>
-        </div>
+        <FormCard
+          onSubmit={handleAddCard}
+          onCancel={() => setIsFormVisible(false)}
+        />
       ) : (
-        // <button onClick={() => setIsFormVisible(true)}>+</button>
         <div className="addCard" onClick={() => setIsFormVisible(true)}>
           <div className="addCard__icon">
             <Plus />

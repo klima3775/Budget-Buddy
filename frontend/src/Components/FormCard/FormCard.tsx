@@ -1,16 +1,117 @@
-import React from "react";
+// import React from "react";
+// import { Textarea, Stack, Box, Autocomplete, Button } from "@mui/joy";
+
+// const FormCard: React.FC = () => {
+//   // onSubmit={(event) => {
+//   //       event.preventDefault();
+//   //     }}
+
+//   const cardType = [
+//     { value: "Debit", label: "Debit" },
+//     { value: "Credit", label: "Credit" },
+//     { value: "Deposit Card", label: "Deposit Card" },
+//   ];
+
+//   return (
+//     <Box
+//       sx={{
+//         marginTop: "50px",
+//         display: "flex",
+//         justifyContent: "center",
+//         alignItems: "center",
+//       }}
+//     >
+//       <Box
+//         component="form"
+//         sx={{
+//           width: "100%",
+//           maxWidth: "325px",
+//           padding: "20px",
+//           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+//           borderRadius: "8px",
+//           backgroundColor: "#f0f0f0",
+//         }}
+//       >
+//         <h2>Fill in payment card details</h2>
+//         <Stack spacing={2}>
+//           <Textarea
+//             required
+//             name="Primary"
+//             placeholder="Payment card name"
+//             variant="outlined"
+//             color="primary"
+//             sx={{ color: "grey" }}
+//           />
+//           <Textarea
+//             required
+//             name="Primary"
+//             placeholder="Payment card number"
+//             variant="outlined"
+//             color="primary"
+//             sx={{ color: "grey" }}
+//           />
+
+//           <Autocomplete
+//             variant="outlined"
+//             placeholder="select map type"
+//             options={cardType}
+//             color="primary"
+//             sx={{ width: 325, color: "grey" }}
+//           />
+
+//           <Textarea
+//             required
+//             name="Primary"
+//             placeholder="Balance card"
+//             variant="outlined"
+//             color="primary"
+//             sx={{ color: "grey" }}
+//           />
+
+//           <Button size="md">SUBMIT</Button>
+//         </Stack>
+//       </Box>
+//     </Box>
+//   );
+// };
+
+// export default FormCard;
+
+import React, { useState } from "react";
 import { Textarea, Stack, Box, Autocomplete, Button } from "@mui/joy";
 
-const FormCard: React.FC = () => {
-  // onSubmit={(event) => {
-  //       event.preventDefault();
-  //     }}
+interface FormCardProps {
+  onSubmit: (cardData: {
+    name: string;
+    number: string;
+    type: string;
+    balance: string;
+  }) => void;
+  onCancel: () => void;
+}
+
+const FormCard: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
+  const [name, setName] = useState("");
+  const [number, setNumber] = useState("");
+  const [type, setType] = useState<string | null>(null);
+  const [balance, setBalance] = useState("");
 
   const cardType = [
     { value: "Debit", label: "Debit" },
     { value: "Credit", label: "Credit" },
     { value: "Deposit Card", label: "Deposit Card" },
   ];
+
+  const handleFormSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (type) {
+      onSubmit({ name, number, type, balance });
+      setName("");
+      setNumber("");
+      setType(null);
+      setBalance("");
+    }
+  };
 
   return (
     <Box
@@ -23,6 +124,7 @@ const FormCard: React.FC = () => {
     >
       <Box
         component="form"
+        onSubmit={handleFormSubmit}
         sx={{
           width: "100%",
           maxWidth: "325px",
@@ -36,39 +138,42 @@ const FormCard: React.FC = () => {
         <Stack spacing={2}>
           <Textarea
             required
-            name="Primary"
             placeholder="Payment card name"
             variant="outlined"
-            color="primary"
-            sx={{ color: "grey" }}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
           <Textarea
             required
-            name="Primary"
             placeholder="Payment card number"
             variant="outlined"
-            color="primary"
-            sx={{ color: "grey" }}
+            value={number}
+            onChange={(e) => setNumber(e.target.value)}
           />
-
           <Autocomplete
             variant="outlined"
-            placeholder="select map type"
             options={cardType}
-            color="primary"
-            sx={{ width: 325, color: "grey" }}
+            value={cardType.find((option) => option.value === type) || null}
+            onChange={(e, newValue) => setType(newValue?.value || null)}
+            isOptionEqualToValue={(option, value) =>
+              option.value === value?.value
+            }
+            getOptionLabel={(option) => option.label}
+            placeholder="Select card type"
           />
-
           <Textarea
             required
-            name="Primary"
-            placeholder="Balance card"
+            placeholder="Balance"
             variant="outlined"
-            color="primary"
-            sx={{ color: "grey" }}
+            value={balance}
+            onChange={(e) => setBalance(e.target.value)}
           />
-
-          <Button size="md">SUBMIT</Button>
+          <Button type="submit" size="md">
+            Submit
+          </Button>
+          <Button onClick={onCancel} size="md" variant="soft">
+            Cancel
+          </Button>
         </Stack>
       </Box>
     </Box>
