@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./AddCardBtn.scss";
 import { ReactComponent as Plus } from "../../assets/cards/Plus.svg";
 import FormCard from "../FormCard/FormCard";
+import { Modal } from "@mui/joy";
 
 interface AddCardBtnProps {
   onAddCard: (title: string, icon: string, backgroundColor: string) => void;
@@ -18,28 +19,38 @@ const AddCardBtn: React.FC<AddCardBtnProps> = ({ onAddCard }) => {
   }) => {
     const newCard = {
       title: cardData.name,
-      icon: "", // Подставьте логику выбора иконки, если нужно
-      backgroundColor: "#ccc", // Установите цвет по умолчанию
+      icon: "",
+      backgroundColor: "#ccc",
     };
     onAddCard(newCard.title, newCard.icon, newCard.backgroundColor);
     setIsFormVisible(false);
   };
 
   return (
-    <div className="add-card-btn">
-      {isFormVisible ? (
-        <FormCard
-          onSubmit={handleAddCard}
-          onCancel={() => setIsFormVisible(false)}
-        />
-      ) : (
+    <>
+      <div className="add-card-btn">
         <div className="addCard" onClick={() => setIsFormVisible(true)}>
           <div className="addCard__icon">
             <Plus />
           </div>
         </div>
-      )}
-    </div>
+      </div>
+
+      <Modal
+        open={isFormVisible}
+        onClose={() => setIsFormVisible(false)}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <FormCard
+          onSubmit={handleAddCard}
+          onCancel={() => setIsFormVisible(false)}
+        />
+      </Modal>
+    </>
   );
 };
 
