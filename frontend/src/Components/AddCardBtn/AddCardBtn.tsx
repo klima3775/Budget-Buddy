@@ -5,7 +5,12 @@ import FormCard from "../FormCard/FormCard";
 import { Modal } from "@mui/joy";
 
 interface AddCardBtnProps {
-  onAddCard: (title: string, icon: string, backgroundColor: string) => void;
+  onAddCard: (
+    title: string,
+    number: string,
+    type: string,
+    balance: string
+  ) => void;
 }
 
 const AddCardBtn: React.FC<AddCardBtnProps> = ({ onAddCard }) => {
@@ -19,10 +24,11 @@ const AddCardBtn: React.FC<AddCardBtnProps> = ({ onAddCard }) => {
   }) => {
     const newCard = {
       title: cardData.name,
-      icon: "",
-      backgroundColor: "#ccc",
+      numberCard: cardData.number,
+      type: cardData.type,
+      balance: cardData.balance,
     };
-    onAddCard(newCard.title, newCard.icon, newCard.backgroundColor);
+    onAddCard(newCard.title, newCard.numberCard, newCard.type, newCard.balance);
     setIsFormVisible(false);
   };
 
