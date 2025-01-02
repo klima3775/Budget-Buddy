@@ -25,14 +25,21 @@ const cardTypeIcons: { [key: string]: JSX.Element } = {
 function Card({ name, number, type, balance }: CardProps) {
   const cardColor = cardTypeColors[type] || "#FFFFFF";
   const cardIcon = cardTypeIcons[type] || null;
+  const textColor = type === "Debit Card" ? "#FFFFFF" : "#000000";
 
   return (
     <div className="card" style={{ backgroundColor: cardColor }}>
-      <div className="card-icon">{cardIcon}</div>
-      <h3>{name}</h3>
-      <p>Type: {type}</p>
-      <p>Number: {number}</p>
-      <p>Balance: {balance}</p>
+      <div className="card-info">
+        {/* <h3>{name}</h3> */}
+        <p style={{ color: textColor }}>{type}</p>
+        <div className="card-icon">{cardIcon}</div>
+      </div>
+      <div className="card-details">
+        {/* <p style={{ color: textColor }}>{number}</p> */}
+        <p className="balance" style={{ color: textColor }}>
+          {balance}
+        </p>
+      </div>
     </div>
   );
 }
