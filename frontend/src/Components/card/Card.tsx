@@ -1,6 +1,8 @@
-import React from "react";
+// import React, { JSX } from "react";
 import "./Card.scss";
-
+import { ReactComponent as Debit } from "../../assets/cards/Debit.svg";
+import { ReactComponent as Credit } from "../../assets/cards/Credit.svg";
+import { ReactComponent as Deposit } from "../../assets/cards/Deposit.svg";
 interface CardProps {
   name?: string;
   number: string;
@@ -14,14 +16,22 @@ const cardTypeColors: { [key: string]: string } = {
   "Deposit Card": "#FB9A94",
 };
 
+const cardTypeIcons: { [key: string]: JSX.Element } = {
+  "Debit Card": <Debit />,
+  "Credit Card": <Credit />,
+  "Deposit Card": <Deposit />,
+};
+
 function Card({ name, number, type, balance }: CardProps) {
   const cardColor = cardTypeColors[type] || "#FFFFFF";
+  const cardIcon = cardTypeIcons[type] || null;
 
   return (
     <div className="card" style={{ backgroundColor: cardColor }}>
+      <div className="card-icon">{cardIcon}</div>
       <h3>{name}</h3>
-      <p>Number: {number}</p>
       <p>Type: {type}</p>
+      <p>Number: {number}</p>
       <p>Balance: {balance}</p>
     </div>
   );
