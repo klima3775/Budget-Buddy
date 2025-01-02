@@ -1,4 +1,4 @@
-// import React, { JSX } from "react";
+import React, { JSX } from "react";
 import "./Card.scss";
 import { ReactComponent as Debit } from "../../assets/cards/Debit.svg";
 import { ReactComponent as Credit } from "../../assets/cards/Credit.svg";
