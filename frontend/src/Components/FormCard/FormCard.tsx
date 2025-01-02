@@ -18,8 +18,8 @@ const FormCard: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
   const [balance, setBalance] = useState("");
 
   const cardType = [
-    { value: "Debit", label: "Debit" },
-    { value: "Credit", label: "Credit" },
+    { value: "Debit Card", label: "Debit Card" },
+    { value: "Credit Card", label: "Credit Card" },
     { value: "Deposit Card", label: "Deposit Card" },
   ];
 
