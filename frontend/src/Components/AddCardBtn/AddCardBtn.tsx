@@ -44,7 +44,6 @@ const AddCardBtn: React.FC<AddCardBtnProps> = ({ onAddCard }) => {
 
       <Modal
         open={isFormVisible}
-        onClose={() => setIsFormVisible(false)}
         sx={{
           display: "flex",
           justifyContent: "center",
