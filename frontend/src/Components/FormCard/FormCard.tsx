@@ -7,6 +7,8 @@ import {
   Button,
   Typography,
 } from "@mui/joy";
+import { cardType, selectCurrency } from "../../utils/cardType";
+import getErrorStyle from "../../utils/formUtils";
 import CardProps from "../../utils/cardInterface";
 
 interface FormCardProps {
@@ -27,22 +29,6 @@ const FormCard: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
     balance: false,
     currency: false,
   });
-
-  const cardType = [
-    { value: "Debit Card", label: "Debit Card" },
-    { value: "Credit Card", label: "Credit Card" },
-    { value: "Deposit Card", label: "Deposit Card" },
-  ];
-
-  const selectCurrency = [
-    { value: "USD", label: "USD" },
-    { value: "EUR", label: "EUR" },
-    { value: "UAN", label: "UAN" },
-  ];
-
-  const getErrorStyle = (error: boolean) => ({
-    borderColor: error ? "red" : "inherit",
-  }); // Функция для изменения стиля в зависимости от наличия ошибки винести в отдельный файл
 
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
