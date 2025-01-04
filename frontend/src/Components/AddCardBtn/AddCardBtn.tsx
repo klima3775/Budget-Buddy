@@ -6,8 +6,8 @@ import { Modal } from "@mui/joy";
 
 interface AddCardBtnProps {
   onAddCard: (
-    title: string,
-    number: string,
+    // title: string,
+    // number: string,
     type: string,
     balance: string,
     currency: string
@@ -18,22 +18,22 @@ const AddCardBtn: React.FC<AddCardBtnProps> = ({ onAddCard }) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   const handleAddCard = (cardData: {
-    name: string;
-    number: string;
+    // name: string;
+    // number: string;
     type: string;
     balance: string;
     currency: string;
   }) => {
     const newCard = {
-      title: cardData.name,
-      numberCard: cardData.number,
+      // title: cardData.name,
+      // numberCard: cardData.number,
       type: cardData.type,
       balance: cardData.balance,
       currency: cardData.currency,
     };
     onAddCard(
-      newCard.title,
-      newCard.numberCard,
+      // newCard.title,
+      // newCard.numberCard,
       newCard.type,
       newCard.balance,
       newCard.currency

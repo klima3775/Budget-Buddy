@@ -4,8 +4,8 @@ import { ReactComponent as Debit } from "../../assets/cards/Debit.svg";
 import { ReactComponent as Credit } from "../../assets/cards/Credit.svg";
 import { ReactComponent as Deposit } from "../../assets/cards/Deposit.svg";
 interface CardProps {
-  name?: string;
-  number: string;
+  // name?: string; прокинуть в дальнейшем
+  // number: string;
   type: string;
   balance: string;
   currency: string;
@@ -23,7 +23,7 @@ const cardTypeIcons: { [key: string]: JSX.Element } = {
   "Deposit Card": <Deposit />,
 };
 
-function Card({ name, number, type, balance, currency }: CardProps) {
+function Card({ type, balance, currency }: CardProps) {
   const cardColor = cardTypeColors[type] || "#FFFFFF";
   const cardIcon = cardTypeIcons[type] || null;
   const textColor = type === "Debit Card" ? "#FFFFFF" : "#000000";

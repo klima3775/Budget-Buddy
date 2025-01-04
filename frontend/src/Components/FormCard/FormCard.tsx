@@ -10,8 +10,8 @@ import {
 
 interface FormCardProps {
   onSubmit: (cardData: {
-    name: string;
-    number: string;
+    // name: string;
+    // number: string;
     type: string;
     balance: string;
     currency: string;
@@ -20,14 +20,14 @@ interface FormCardProps {
 }
 
 const FormCard: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
-  const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
+  // const [name, setName] = useState("");
+  // const [number, setNumber] = useState("");
   const [type, setType] = useState<string | null>("");
   const [balance, setBalance] = useState("");
   const [currency, setCurrency] = useState<string>("");
   const [errors, setErrors] = useState({
-    name: false,
-    number: false,
+    // name: false,
+    // number: false,
     type: false,
     balance: false,
     currency: false,
@@ -53,8 +53,8 @@ const FormCard: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
     event.preventDefault();
 
     const newErrors = {
-      name: !name.trim(),
-      number: !number.trim(),
+      // name: !name.trim(),
+      // number: !number.trim(),
       type: !type,
       balance: !balance.trim(),
       currency: !currency,
@@ -63,9 +63,9 @@ const FormCard: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
     setErrors(newErrors);
     // Если нет ошибок, отправить данные
     if (!Object.values(newErrors).some((error) => error)) {
-      onSubmit({ name, number, type: type || "", balance, currency });
-      setName("");
-      setNumber("");
+      onSubmit({ type: type || "", balance, currency });
+      // setName("");
+      // setNumber("");
       setType(null);
       setBalance("");
       setCurrency("");
@@ -95,7 +95,7 @@ const FormCard: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
       >
         <h2>Fill in payment card details</h2>
         <Stack spacing={2}>
-          <Textarea
+          {/* <Textarea
             placeholder="Payment card name"
             variant="outlined"
             value={name}
@@ -106,8 +106,8 @@ const FormCard: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
             <Typography color="danger" fontSize="small">
               Name is required
             </Typography>
-          )}
-          <Textarea
+          )} */}
+          {/* <Textarea
             placeholder="Payment card number"
             variant="outlined"
             value={number}
@@ -118,7 +118,7 @@ const FormCard: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
             <Typography color="danger" fontSize="small">
               Number is required
             </Typography>
-          )}
+          )} */}
           <Autocomplete
             variant="outlined"
             options={cardType}

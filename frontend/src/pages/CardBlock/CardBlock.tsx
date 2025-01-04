@@ -6,9 +6,9 @@ import logo from "../../assets/logo/BudgetLogo.png";
 
 // Интерфейс для карт
 interface CardBlockProps {
-  name?: string; // Делаем необязательным, если name не всегда нужно
-  title: string;
-  number: string;
+  // name?: string; // Делаем необязательным, если name не всегда нужно
+  // title: string;
+  // number: string;
   type: string;
   balance: string;
   currency: string;
@@ -19,17 +19,14 @@ const CardBlock: React.FC = () => {
 
   // Функция для добавления новой карты
   const addCard = (
-    title: string,
-    number: string,
+    // title: string,
+    // number: string,
     type: string,
     balance: string,
     currency: string,
     name?: string
   ) => {
     const newCard: CardBlockProps = {
-      name,
-      title,
-      number,
       type,
       balance,
       currency,
