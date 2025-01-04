@@ -7,6 +7,7 @@ interface FormCardProps {
     number: string;
     type: string;
     balance: string;
+    currency: string;
   }) => void;
   onCancel: () => void;
 }
@@ -14,8 +15,9 @@ interface FormCardProps {
 const FormCard: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
-  const [type, setType] = useState<string | null>(null);
+  const [type, setType] = useState<string | null>("");
   const [balance, setBalance] = useState("");
+  const [currency, setCurrency] = useState<string>("");
 
   const cardType = [
     { value: "Debit Card", label: "Debit Card" },
@@ -23,10 +25,16 @@ const FormCard: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
     { value: "Deposit Card", label: "Deposit Card" },
   ];
 
+  const selectCurrency = [
+    { value: "USD", label: "USD" },
+    { value: "EUR", label: "EUR" },
+    { value: "UAN", label: "UAN" },
+  ];
+
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (type) {
-      onSubmit({ name, number, type, balance });
+      onSubmit({ name, number, type, balance, currency });
       setName("");
       setNumber("");
       setType(null);
@@ -57,30 +65,46 @@ const FormCard: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
       >
         <h2>Fill in payment card details</h2>
         <Stack spacing={2}>
-          <Textarea
+          {/* <Textarea
             required
             placeholder="Payment card name"
             variant="outlined"
             value={name}
             onChange={(e) => setName(e.target.value)}
-          />
-          <Textarea
+          /> */}
+          {/* <Textarea
             required
             placeholder="Payment card number"
             variant="outlined"
             value={number}
             onChange={(e) => setNumber(e.target.value)}
-          />
+          /> */}
           <Autocomplete
             variant="outlined"
             options={cardType}
+            // Sets the current value based on the 'type' state
             value={cardType.find((option) => option.value === type) || null}
             onChange={(e, newValue) => setType(newValue?.value || null)}
+            // Compares options and values to ensure correct selection
+            isOptionEqualToValue={(option, value) =>
+              option.value === value?.value
+            }
+            // Displays the label for each option
+            getOptionLabel={(option) => option.label}
+            placeholder="Select card type"
+          />
+          <Autocomplete
+            variant="outlined"
+            options={selectCurrency}
+            value={
+              selectCurrency.find((option) => option.value === currency) || null
+            }
+            onChange={(e, newValue) => setCurrency(newValue?.value || "")}
             isOptionEqualToValue={(option, value) =>
               option.value === value?.value
             }
             getOptionLabel={(option) => option.label}
-            placeholder="Select card type"
+            placeholder="Select currency"
           />
           <Textarea
             required

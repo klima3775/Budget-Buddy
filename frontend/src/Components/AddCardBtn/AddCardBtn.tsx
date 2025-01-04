@@ -9,7 +9,8 @@ interface AddCardBtnProps {
     title: string,
     number: string,
     type: string,
-    balance: string
+    balance: string,
+    currency: string
   ) => void;
 }
 
@@ -21,14 +22,22 @@ const AddCardBtn: React.FC<AddCardBtnProps> = ({ onAddCard }) => {
     number: string;
     type: string;
     balance: string;
+    currency: string;
   }) => {
     const newCard = {
       title: cardData.name,
       numberCard: cardData.number,
       type: cardData.type,
       balance: cardData.balance,
+      currency: cardData.currency,
     };
-    onAddCard(newCard.title, newCard.numberCard, newCard.type, newCard.balance);
+    onAddCard(
+      newCard.title,
+      newCard.numberCard,
+      newCard.type,
+      newCard.balance,
+      newCard.currency
+    );
     setIsFormVisible(false);
   };
 

@@ -8,6 +8,7 @@ interface CardProps {
   number: string;
   type: string;
   balance: string;
+  currency: string;
 }
 
 const cardTypeColors: { [key: string]: string } = {
@@ -22,7 +23,7 @@ const cardTypeIcons: { [key: string]: JSX.Element } = {
   "Deposit Card": <Deposit />,
 };
 
-function Card({ name, number, type, balance }: CardProps) {
+function Card({ name, number, type, balance, currency }: CardProps) {
   const cardColor = cardTypeColors[type] || "#FFFFFF";
   const cardIcon = cardTypeIcons[type] || null;
   const textColor = type === "Debit Card" ? "#FFFFFF" : "#000000";
@@ -37,7 +38,7 @@ function Card({ name, number, type, balance }: CardProps) {
       <div className="card-details">
         {/* <p style={{ color: textColor }}>{number}</p> */}
         <p className="balance" style={{ color: textColor }}>
-          {balance}
+          {balance} {currency}
         </p>
       </div>
     </div>

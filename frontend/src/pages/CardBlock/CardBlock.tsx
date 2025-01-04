@@ -11,6 +11,7 @@ interface CardBlockProps {
   number: string;
   type: string;
   balance: string;
+  currency: string;
 }
 
 const CardBlock: React.FC = () => {
@@ -22,9 +23,17 @@ const CardBlock: React.FC = () => {
     number: string,
     type: string,
     balance: string,
+    currency: string,
     name?: string
   ) => {
-    const newCard: CardBlockProps = { name, title, number, type, balance };
+    const newCard: CardBlockProps = {
+      name,
+      title,
+      number,
+      type,
+      balance,
+      currency,
+    };
     setCards([newCard, ...cards]);
   };
 
