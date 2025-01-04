@@ -3,17 +3,16 @@ import "./AddCardBtn.scss";
 import { ReactComponent as Plus } from "../../assets/cards/Plus.svg";
 import FormCard from "../FormCard/FormCard";
 import { Modal } from "@mui/joy";
-
 import CardProps from "../../utils/cardInterface"; // Импортируйте интерфейс
 interface AddCardBtnProps {
-  onAddCard: (type: string, balance: string, currency: string) => void;
+  onAddCard: (cardData: CardProps) => void;
 }
 
 const AddCardBtn: React.FC<AddCardBtnProps> = ({ onAddCard }) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   const handleAddCard: (cardData: CardProps) => void = (cardData) => {
-    onAddCard(cardData.type, cardData.balance, cardData.currency);
+    onAddCard(cardData);
     setIsFormVisible(false);
   };
 

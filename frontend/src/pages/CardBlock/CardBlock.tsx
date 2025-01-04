@@ -9,20 +9,8 @@ const CardBlock: React.FC = () => {
   const [cards, setCards] = useState<CardProps[]>([]);
 
   // Функция для добавления новой карты
-  const addCard = (
-    // title: string,
-    // number: string,
-    type: string,
-    balance: string,
-    currency: string
-    // name?: string
-  ) => {
-    const newCard: CardProps = {
-      type,
-      balance,
-      currency,
-    };
-    setCards([newCard, ...cards]);
+  const addCard = (cardData: CardProps) => {
+    setCards([cardData, ...cards]);
   };
 
   return (
