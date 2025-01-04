@@ -3,19 +3,10 @@ import Card from "../../Components/Card/Card";
 import AddCardBtn from "../../Components/AddCardBtn/AddCardBtn";
 import { useState } from "react";
 import logo from "../../assets/logo/BudgetLogo.png";
-
-// Интерфейс для карт
-interface CardBlockProps {
-  // name?: string; // Делаем необязательным, если name не всегда нужно
-  // title: string;
-  // number: string;
-  type: string;
-  balance: string;
-  currency: string;
-}
+import CardProps from "../../utils/cardInterface";
 
 const CardBlock: React.FC = () => {
-  const [cards, setCards] = useState<CardBlockProps[]>([]);
+  const [cards, setCards] = useState<CardProps[]>([]);
 
   // Функция для добавления новой карты
   const addCard = (
@@ -23,10 +14,10 @@ const CardBlock: React.FC = () => {
     // number: string,
     type: string,
     balance: string,
-    currency: string,
-    name?: string
+    currency: string
+    // name?: string
   ) => {
-    const newCard: CardBlockProps = {
+    const newCard: CardProps = {
       type,
       balance,
       currency,

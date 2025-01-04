@@ -3,13 +3,7 @@ import "./Card.scss";
 import { ReactComponent as Debit } from "../../assets/cards/Debit.svg";
 import { ReactComponent as Credit } from "../../assets/cards/Credit.svg";
 import { ReactComponent as Deposit } from "../../assets/cards/Deposit.svg";
-interface CardProps {
-  // name?: string; прокинуть в дальнейшем
-  // number: string;
-  type: string;
-  balance: string;
-  currency: string;
-}
+import CardProps from "../../utils/cardInterface";
 
 const cardTypeColors: { [key: string]: string } = {
   "Debit Card": "#2D90D7",

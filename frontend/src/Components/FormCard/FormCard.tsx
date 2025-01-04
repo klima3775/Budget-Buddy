@@ -7,15 +7,10 @@ import {
   Button,
   Typography,
 } from "@mui/joy";
+import CardProps from "../../utils/cardInterface";
 
 interface FormCardProps {
-  onSubmit: (cardData: {
-    // name: string;
-    // number: string;
-    type: string;
-    balance: string;
-    currency: string;
-  }) => void;
+  onSubmit: (cardData: CardProps) => void;
   onCancel: () => void;
 }
 
@@ -47,7 +42,7 @@ const FormCard: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
 
   const getErrorStyle = (error: boolean) => ({
     borderColor: error ? "red" : "inherit",
-  });
+  }); // Функция для изменения стиля в зависимости от наличия ошибки винести в отдельный файл
 
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
