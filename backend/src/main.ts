@@ -1,9 +1,9 @@
 import express, { Application, Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-// import transactionsRoutes from "./routes/transactions.js";
-// import userRoutes from "./routes/users.js";
+import User from "./model/user.js";
 
 dotenv.config();
 
