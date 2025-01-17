@@ -2,9 +2,9 @@ import mongoose, { Document, model, Schema } from "mongoose";
 import bcrypt from "bcrypt";
 
 // Интерфейс для пользователя
-interface IUser extends Document {
+export interface IUser extends Document {
   email: string;
-  token: string;
+  token?: string;
   password: string;
 }
 
