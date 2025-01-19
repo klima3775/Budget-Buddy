@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+
 import { body, validationResult } from "express-validator";
 import User, { IUser } from "../model/user.js";
 
@@ -54,15 +55,34 @@ router.post(
   "/login",
   [
     body("email").isEmail().withMessage("Некоректний email"),
-    body("password").notEmpty().withMessage("Введіть пароль"),
+    body("password").notEmpty().withMessage("Пароль не може бути пустим"),
   ],
   async (req: Request<{}, {}, IUser>, res: Response): Promise<void> => {
-    // перевірка валідації
     const errors = validationResult(req);
-    // if(!errors.isEmpty())
+
     if (!errors.isEmpty()) {
       res.status(400).json({ errors: errors.array() });
       return;
+    }
+
+    const { email, password } = req.body;
+    try {
+      const user = await User.findOne({ email });
+      if (!user) {
+        res.status(400).json({ message: "Невірний email або пароль" });
+        return;
+      }
+
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        res.status(400).json({ message: "Невірний email або пароль" });
+        return;
+      }
+
+      const userId = (user._id as unknown as string).toString();
+      res.json({ token: generateToken(userId), userId: user._id });
+    } catch (error) {
+      res.status(500).json({ message: "Помилка входу", error });
     }
   }
 );
