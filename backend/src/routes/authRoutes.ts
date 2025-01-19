@@ -33,7 +33,7 @@ router.post(
         res.status(400).json({ message: "Користувач вже існує" });
         return;
       }
-
+      // хеширование пароля
       const hashedPassword = await bcrypt.hash(password, 10);
 
       user = new User({ email, password: hashedPassword }) as IUser;
@@ -45,6 +45,24 @@ router.post(
       res.json({ token: generateToken(userId), userId });
     } catch (error) {
       res.status(500).json({ message: "Помилка реєстрації", error });
+    }
+  }
+);
+
+// вход
+router.post(
+  "/login",
+  [
+    body("email").isEmail().withMessage("Некоректний email"),
+    body("password").notEmpty().withMessage("Введіть пароль"),
+  ],
+  async (req: Request<{}, {}, IUser>, res: Response): Promise<void> => {
+    // перевірка валідації
+    const errors = validationResult(req);
+    // if(!errors.isEmpty())
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
     }
   }
 );

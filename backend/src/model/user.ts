@@ -10,9 +10,9 @@ export interface IUser extends Document {
 
 // Схема пользователя
 const userSchema: Schema<IUser> = new mongoose.Schema({
-  token: { type: String, required: true }, // Токен пользователя
-  email: { type: String, required: true, unique: true }, // Email пользователя
-  password: { type: String, required: true }, // Пароль пользователя
+  token: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
 });
 
 // Хэширование пароля
