@@ -1,5 +1,5 @@
 import "./CardBlock.scss";
-import Card from "../../Components/Card/Card";
+import Card from "../../Components/card/Card";
 import AddCardBtn from "../../Components/AddCardBtn/AddCardBtn";
 import { useState } from "react";
 import logo from "../../assets/logo/BudgetLogo.png";
