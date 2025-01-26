@@ -17,6 +17,7 @@ const FormReg: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
     password: false,
     email: false,
   });
+  const [backendErrors, setBackendErrors] = useState<string[]>([]);
 
   const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -49,6 +50,12 @@ const FormReg: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
         );
 
         if (!response.ok) {
+          const result = await response.json();
+          setBackendErrors(
+            result.errors
+              ? result.errors.map((err: any) => err.msg)
+              : [result.message]
+          );
           throw new Error("Failed to register");
         }
 
@@ -125,6 +132,15 @@ const FormReg: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
             <Typography color="danger" fontSize="small">
               Token is required
             </Typography>
+          )}
+          {backendErrors.length > 0 && (
+            <Box>
+              {backendErrors.map((error, index) => (
+                <Typography key={index} color="danger" fontSize="small">
+                  {error}
+                </Typography>
+              ))}
+            </Box>
           )}
           <Button type="submit" size="md">
             Submit
