@@ -85,12 +85,12 @@ const FormReg: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
           backgroundColor: "#f0f0f0",
         }}
       >
-        <h2>Fill in payment card details</h2>
+        <h2>Введіть дані для реєстрації</h2>
         <Stack spacing={2}>
           <Textarea
             name="email"
             placeholder="Email"
-            variant="solid"
+            variant="outlined"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             sx={getErrorStyle(errors.email)}
@@ -103,7 +103,7 @@ const FormReg: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
           <Textarea
             name="password"
             placeholder="Password"
-            variant="solid"
+            variant="outlined"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             sx={getErrorStyle(errors.password)}
@@ -116,7 +116,7 @@ const FormReg: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
           <Textarea
             name="token"
             placeholder="Token"
-            variant="solid"
+            variant="outlined"
             value={token || ""}
             onChange={(e) => setToken(e.target.value)}
             sx={getErrorStyle(errors.token)}
