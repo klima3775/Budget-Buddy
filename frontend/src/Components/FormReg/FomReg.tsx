@@ -1,54 +1,66 @@
 import React, { useState } from "react";
-import {
-  Stack,
-  Box,
-  Autocomplete,
-  Button,
-  Typography,
-  Textarea,
-} from "@mui/joy";
+import { Stack, Box, Button, Typography, Textarea } from "@mui/joy";
 import getErrorStyle from "../../utils/formUtils";
-import CardProps from "../../utils/cardInterface";
+import RegistrationFormProps from "../../utils/registerFormInterface";
 
 interface FormCardProps {
-  onSubmit: (cardData: CardProps) => void;
+  onSubmit: (cardData: RegistrationFormProps) => void;
   onCancel: () => void;
 }
 
 const FormReg: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
-  // const [name, setName] = useState("");
-  // const [number, setNumber] = useState("");
-  const [type, setType] = useState<string | null>("");
-  const [balance, setBalance] = useState("");
-  const [currency, setCurrency] = useState<string>("");
+  const [token, setToken] = useState<string | null>("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
   const [errors, setErrors] = useState({
-    // name: false,
-    // number: false,
-    type: false,
-    balance: false,
-    currency: false,
+    token: false,
+    password: false,
+    email: false,
   });
 
-  const handleFormSubmit = (event: React.FormEvent) => {
+  const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     const newErrors = {
-      // name: !name.trim(),
-      // number: !number.trim(),
-      type: !type,
-      balance: !balance.trim(),
-      currency: !currency,
+      token: !token,
+      password: !password,
+      email: !email,
     };
 
     setErrors(newErrors);
-    // Если нет ошибок, отправить данные
+
     if (!Object.values(newErrors).some((error) => error)) {
-      onSubmit({ type: type || "", balance, currency });
-      // setName("");
-      // setNumber("");
-      setType(null);
-      setBalance("");
-      setCurrency("");
+      const formData: RegistrationFormProps = {
+        token: token || "",
+        password,
+        email,
+      };
+
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/auth/register",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to register");
+        }
+
+        const result = await response.json();
+        onSubmit(result);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+
+      setToken(null);
+      setPassword("");
+      setEmail("");
     }
   };
 
@@ -75,28 +87,49 @@ const FormReg: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
       >
         <h2>Fill in payment card details</h2>
         <Stack spacing={2}>
-          <Textarea name="outlined" placeholder="Email" variant="solid" />
-          {errors.balance && (
+          <Textarea
+            name="email"
+            placeholder="Email"
+            variant="solid"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            sx={getErrorStyle(errors.email)}
+          />
+          {errors.email && (
             <Typography color="danger" fontSize="small">
-              Balance is required
+              Email is required
             </Typography>
           )}
-          <Textarea name="outlined" placeholder="Password" variant="solid" />
-          {errors.balance && (
+          <Textarea
+            name="password"
+            placeholder="Password"
+            variant="solid"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            sx={getErrorStyle(errors.password)}
+          />
+          {errors.password && (
             <Typography color="danger" fontSize="small">
-              Balance is required
+              Password is required
             </Typography>
           )}
-          <Textarea name="outlined" placeholder="Token" variant="solid" />
-          {errors.balance && (
+          <Textarea
+            name="token"
+            placeholder="Token"
+            variant="solid"
+            value={token || ""}
+            onChange={(e) => setToken(e.target.value)}
+            sx={getErrorStyle(errors.token)}
+          />
+          {errors.token && (
             <Typography color="danger" fontSize="small">
-              Balance is required
+              Token is required
             </Typography>
           )}
           <Button type="submit" size="md">
             Submit
           </Button>
-          <Button size="md" variant="soft">
+          <Button onClick={onCancel} size="md" variant="soft">
             Cancel
           </Button>
         </Stack>
