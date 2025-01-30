@@ -24,7 +24,7 @@ const FormRegLog: React.FC<FormProps> = ({ onSubmit, onCancel, isLogin }) => {
     event.preventDefault();
 
     const newErrors = {
-      token: !token,
+      token: !token && !isLogin,
       password: !password,
       email: !email,
     };
@@ -38,9 +38,13 @@ const FormRegLog: React.FC<FormProps> = ({ onSubmit, onCancel, isLogin }) => {
         email,
       };
 
+      console.log("Form submitted with data:", formData);
+
       try {
         const response = await fetch(
-          "http://localhost:5000/api/auth/register",
+          isLogin
+            ? "http://localhost:5000/api/auth/login"
+            : "http://localhost:5000/api/auth/register",
           {
             method: "POST",
             headers: {
@@ -57,7 +61,7 @@ const FormRegLog: React.FC<FormProps> = ({ onSubmit, onCancel, isLogin }) => {
               ? result.errors.map((err: any) => err.msg)
               : [result.message]
           );
-          throw new Error("Failed to register");
+          throw new Error("Failed to submit form");
         }
 
         const result = await response.json();
