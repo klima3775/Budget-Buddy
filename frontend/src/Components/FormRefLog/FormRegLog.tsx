@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Stack, Box, Button, Typography, Textarea } from "@mui/joy";
 import getErrorStyle from "../../utils/formUtils";
 import RegistrationFormProps from "../../utils/registerFormInterface";
+import useFormSubmit from "../../hooks/useFormSubmit";
 
 interface FormProps {
   onSubmit: (cardData: RegistrationFormProps) => void;
@@ -10,71 +11,17 @@ interface FormProps {
 }
 
 const FormRegLog: React.FC<FormProps> = ({ onSubmit, onCancel, isLogin }) => {
-  const [token, setToken] = useState<string | null>("");
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState<string>("");
-  const [errors, setErrors] = useState({
-    token: false,
-    password: false,
-    email: false,
-  });
-  const [backendErrors, setBackendErrors] = useState<string[]>([]);
-
-  const handleFormSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-
-    const newErrors = {
-      token: !token && !isLogin,
-      password: !password,
-      email: !email,
-    };
-
-    setErrors(newErrors);
-
-    if (!Object.values(newErrors).some((error) => error)) {
-      const formData: RegistrationFormProps = {
-        token: token || "",
-        password,
-        email,
-      };
-
-      console.log("Form submitted with data:", formData);
-
-      try {
-        const response = await fetch(
-          isLogin
-            ? "http://localhost:5000/api/auth/login"
-            : "http://localhost:5000/api/auth/register",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-          }
-        );
-
-        if (!response.ok) {
-          const result = await response.json();
-          setBackendErrors(
-            result.errors
-              ? result.errors.map((err: any) => err.msg)
-              : [result.message]
-          );
-          throw new Error("Failed to submit form");
-        }
-
-        const result = await response.json();
-        onSubmit(result);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-
-      setToken(null);
-      setPassword("");
-      setEmail("");
-    }
-  };
+  const {
+    token,
+    setToken,
+    password,
+    setPassword,
+    email,
+    setEmail,
+    errors,
+    backendErrors,
+    handleFormSubmit,
+  } = useFormSubmit(isLogin, onSubmit);
 
   return (
     <Box
