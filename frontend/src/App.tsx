@@ -17,9 +17,19 @@ function App() {
   return (
     <div className="App">
       {isLogin === null ? (
-        <div>
-          <button onClick={() => setIsLogin(true)}>Login</button>
-          <button onClick={() => setIsLogin(false)}>Register</button>
+        <div className="app__button-container">
+          <button
+            className="app__button app__button--login"
+            onClick={() => setIsLogin(true)}
+          >
+            Вхід
+          </button>
+          <button
+            className="app__button app__button--register"
+            onClick={() => setIsLogin(false)}
+          >
+            Реєстрація
+          </button>
         </div>
       ) : (
         <FormRegLog
