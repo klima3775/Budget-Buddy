@@ -3,12 +3,13 @@ import { Stack, Box, Button, Typography, Textarea } from "@mui/joy";
 import getErrorStyle from "../../utils/formUtils";
 import RegistrationFormProps from "../../utils/registerFormInterface";
 
-interface FormCardProps {
+interface FormProps {
   onSubmit: (cardData: RegistrationFormProps) => void;
   onCancel: () => void;
+  isLogin: boolean;
 }
 
-const FormReg: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
+const FormRegLog: React.FC<FormProps> = ({ onSubmit, onCancel, isLogin }) => {
   const [token, setToken] = useState<string | null>("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState<string>("");
@@ -92,7 +93,9 @@ const FormReg: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
           backgroundColor: "#f0f0f0",
         }}
       >
-        <h2>Введіть дані для реєстрації</h2>
+        <h2>
+          {isLogin ? "Введіть дані для входу" : "Введіть дані для Реєстрації"}
+        </h2>
         <Stack spacing={2}>
           <Textarea
             name="email"
@@ -120,19 +123,24 @@ const FormReg: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
               Password is required
             </Typography>
           )}
-          <Textarea
-            name="token"
-            placeholder="Token"
-            variant="outlined"
-            value={token || ""}
-            onChange={(e) => setToken(e.target.value)}
-            sx={getErrorStyle(errors.token)}
-          />
-          {errors.token && (
-            <Typography color="danger" fontSize="small">
-              Token is required
-            </Typography>
+          {!isLogin && (
+            <>
+              <Textarea
+                name="token"
+                placeholder="Token"
+                variant="outlined"
+                value={token || ""}
+                onChange={(e) => setToken(e.target.value)}
+                sx={getErrorStyle(errors.token)}
+              />
+              {errors.token && (
+                <Typography color="danger" fontSize="small">
+                  Token is required
+                </Typography>
+              )}
+            </>
           )}
+
           {backendErrors.length > 0 && (
             <Box>
               {backendErrors.map((error, index) => (
@@ -154,4 +162,4 @@ const FormReg: React.FC<FormCardProps> = ({ onSubmit, onCancel }) => {
   );
 };
 
-export default FormReg;
+export default FormRegLog;
