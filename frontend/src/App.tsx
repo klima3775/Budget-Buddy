@@ -1,12 +1,16 @@
 import { useState } from "react";
 import "./App.css";
 import FormRegLog from "./Components/FormRefLog/FormRegLog";
+import CardBlock from "./pages/CardBlock/CardBlock";
+import AuthButtons from "./Components/AuthBtn/AuthBtn";
 
 function App() {
   const [isLogin, setIsLogin] = useState<boolean | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   const handleSubmit = (data: any) => {
     console.log(`${isLogin ? "Login" : "Registration"} successful:`, data);
+    setIsAuthenticated(true);
     setIsLogin(null); // Reset to initial state after submission
   };
 
@@ -16,28 +20,26 @@ function App() {
 
   return (
     <div className="App">
-      {isLogin === null ? (
-        <div className="app__button-container">
-          <button
-            className="app__button app__button--login"
-            onClick={() => setIsLogin(true)}
-          >
-            Вхід
-          </button>
-          <button
-            className="app__button app__button--register"
-            onClick={() => setIsLogin(false)}
-          >
-            Реєстрація
-          </button>
-        </div>
-      ) : (
-        <FormRegLog
-          onSubmit={handleSubmit}
-          onCancel={handleCancel}
-          isLogin={isLogin}
-        />
-      )}
+      <div className="App">
+        {isAuthenticated ? (
+          <CardBlock />
+        ) : (
+          <>
+            {isLogin === null ? (
+              <AuthButtons
+                onLoginClick={() => setIsLogin(true)}
+                onRegisterClick={() => setIsLogin(false)}
+              />
+            ) : (
+              <FormRegLog
+                onSubmit={handleSubmit}
+                onCancel={handleCancel}
+                isLogin={isLogin}
+              />
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }
