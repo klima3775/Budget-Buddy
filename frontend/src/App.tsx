@@ -1,4 +1,10 @@
 import { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import "./App.css";
 import FormRegLog from "./Components/FormRefLog/FormRegLog";
 import CardBlock from "./pages/CardBlock/CardBlock";
@@ -19,28 +25,40 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <Router>
       <div className="App">
-        {isAuthenticated ? (
-          <CardBlock />
-        ) : (
-          <>
-            {isLogin === null ? (
-              <AuthButtons
-                onLoginClick={() => setIsLogin(true)}
-                onRegisterClick={() => setIsLogin(false)}
-              />
-            ) : (
-              <FormRegLog
-                onSubmit={handleSubmit}
-                onCancel={handleCancel}
-                isLogin={isLogin}
-              />
-            )}
-          </>
-        )}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              isAuthenticated ? (
+                <Navigate to="/cards" />
+              ) : (
+                <AuthButtons
+                  onLoginClick={() => setIsLogin(true)}
+                  onRegisterClick={() => setIsLogin(false)}
+                />
+              )
+            }
+          />
+          <Route
+            path="/auth"
+            element={
+              isLogin !== null ? (
+                <FormRegLog
+                  onSubmit={handleSubmit}
+                  onCancel={handleCancel}
+                  isLogin={isLogin}
+                />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
+          />
+          <Route path="/cards" element={<CardBlock />} />
+        </Routes>
       </div>
-    </div>
+    </Router>
   );
 }
 
