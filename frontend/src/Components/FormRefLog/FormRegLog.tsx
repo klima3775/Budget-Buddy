@@ -26,11 +26,12 @@ const FormRegLog: React.FC<FormProps> = ({ onSubmit, onCancel, isLogin }) => {
   return (
     <Box
       sx={{
-        marginTop: "50px",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         height: "100%",
+        backgroundColor: "#0000aa",
+        overflow: "hidden",
       }}
     >
       <Box

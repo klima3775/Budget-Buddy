@@ -9,6 +9,7 @@ import "./App.css";
 import FormRegLog from "./Components/FormRefLog/FormRegLog";
 import CardBlock from "./pages/CardBlock/CardBlock";
 import AuthButtons from "./Components/AuthBtn/AuthBtn";
+import Cabinet from "./pages/Cabinet/Cabinet";
 
 function App() {
   const [isLogin, setIsLogin] = useState<boolean | null>(null);
@@ -55,7 +56,7 @@ function App() {
               )
             }
           />
-          <Route path="/cards" element={<CardBlock />} />
+          <Route path="/cards" element={<Cabinet />} />
         </Routes>
       </div>
     </Router>
