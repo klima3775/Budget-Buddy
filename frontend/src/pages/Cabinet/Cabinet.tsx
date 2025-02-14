@@ -1,11 +1,11 @@
 import CardBlock from "../CardBlock/CardBlock";
+import SearchBar from "../SearchBar/SearchBar";
 
 const Cabinet = () => {
   return (
     <div className="cabinet">
       <CardBlock />
-
-      {/* Добавьте другие компоненты здесь */}
+      <SearchBar />
     </div>
   );
 };

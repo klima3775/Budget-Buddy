@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import "./Search.scss";
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -16,12 +17,7 @@ const Search = () => {
 
   return (
     <div className="search">
-      <input
-        type="text"
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={handleInputChange}
-      />
+      <input type="text" value={searchTerm} onChange={handleInputChange} />
     </div>
   );
 };

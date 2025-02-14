@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import FormRegLog from "./Components/FormRefLog/FormRegLog";
-import CardBlock from "./pages/CardBlock/CardBlock";
 import AuthButtons from "./Components/AuthBtn/AuthBtn";
 import Cabinet from "./pages/Cabinet/Cabinet";
 
@@ -33,7 +32,7 @@ function App() {
             path="/"
             element={
               isAuthenticated ? (
-                <Navigate to="/cards" />
+                <Navigate to="/cabinet" />
               ) : (
                 <AuthButtons
                   onLoginClick={() => setIsLogin(true)}
@@ -56,7 +55,7 @@ function App() {
               )
             }
           />
-          <Route path="/cards" element={<Cabinet />} />
+          <Route path="/cabinet" element={<Cabinet />} />
         </Routes>
       </div>
     </Router>
