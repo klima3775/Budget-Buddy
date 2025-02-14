@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./Search.scss";
+import { ReactComponent as SearchIcon } from "../../assets/searchBar/search.svg";
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -17,6 +18,7 @@ const Search = () => {
 
   return (
     <div className="search">
+      <SearchIcon className="search-icon" />
       <input type="text" value={searchTerm} onChange={handleInputChange} />
     </div>
   );
