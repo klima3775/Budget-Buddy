@@ -46,7 +46,7 @@ const FormRegLog: React.FC<FormProps> = ({ onSubmit, onCancel, isLogin }) => {
           backgroundColor: "#f0f0f0",
         }}
       >
-        <h2>
+        <h2 style={{ textAlign: "center" }}>
           {isLogin ? "Введіть дані для входу" : "Введіть дані для Реєстрації"}
         </h2>
         <Stack spacing={2}>
