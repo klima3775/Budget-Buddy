@@ -3,8 +3,7 @@
   width: 310px;
   height: 40px;
   border-radius: 4px;
-  background-color: #ffffff; //test
-  border: 1px solid #cccccc;
+  //test
 
   .search-icon {
     position: absolute;
@@ -16,10 +15,12 @@
   }
 
   input {
+    background: black; //test
     border: none;
     outline: none;
     height: 100%;
     width: 100%;
     font-size: 16px;
+    padding-left: 45px;
   }
 }

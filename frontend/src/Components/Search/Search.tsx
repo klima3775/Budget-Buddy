@@ -12,7 +12,7 @@ const Search = () => {
   };
 
   const performSearch = (query: string) => {
-    // Здесь вы можете добавить логику для выполнения поиска
+    //
     console.log("Поисковый запрос:", query);
   };
 

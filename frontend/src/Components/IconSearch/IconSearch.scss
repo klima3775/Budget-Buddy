@@ -1,0 +1,19 @@
+.icon-search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 38px;
+    width: 38px;
+    gap: 6px;
+  }
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+}
