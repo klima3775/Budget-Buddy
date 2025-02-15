@@ -1,12 +1,16 @@
 import CardBlock from "../CardBlock/CardBlock";
-import SearchBar from "../SearchBar/SearchBar";
-import Transactions from "../../Components/Transactions/Transactions"; // test variant
+
+import FinancialOverview from "../FinancialOverview/FinancialOverview";
+import Dashboard from "../Dashboard/Dashboard";
+import "./Cabinet.scss";
 const Cabinet = () => {
   return (
     <div className="cabinet">
       <CardBlock />
-      <SearchBar />
-      <Transactions />
+      <div className="content">
+        <Dashboard />
+        <FinancialOverview />
+      </div>
     </div>
   );
 };
