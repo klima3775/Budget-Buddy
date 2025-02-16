@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const monoClient = axios.create({
-  baseURL: "https://api.monobank.ua",
+  baseURL: process.env.MONO_API_URL,
   timeout: 5000,
 });
 

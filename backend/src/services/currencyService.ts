@@ -1,4 +1,3 @@
-import axios from "axios";
 import monoClient from "../client/monoClient.js";
 import { filterRates } from "../utils/currencySort.js";
 
@@ -18,10 +17,11 @@ export default async function getCurrencyRates() {
     const rates = response.data;
 
     const filteredRates = filterRates(rates);
+
     cacheRates = filteredRates;
     lastFetchTime = now.getTime();
+    return filteredRates;
   } catch (error) {
-    console.log("Помилка отримання курсу валют", error);
     throw new Error("Помилка отримання курсу валют");
   }
 }
