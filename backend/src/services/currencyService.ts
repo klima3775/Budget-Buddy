@@ -3,7 +3,7 @@ import { filterRates } from "../utils/currencySort.js";
 
 let cacheRates: any = null;
 let lastFetchTime = 0;
-const cacheDuration = 300000; // 5 minutes
+const cacheDuration = parseInt(process.env.CACHE_DURATION || "300000", 10);
 
 export default async function getCurrencyRates() {
   const now = new Date();
