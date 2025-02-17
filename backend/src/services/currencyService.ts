@@ -5,7 +5,7 @@ let cacheRates: any = null;
 let lastFetchTime = 0;
 const cacheDuration = parseInt(process.env.CACHE_DURATION || "300000", 10);
 
-export default async function getCurrencyRates() {
+async function fetchCurrencyRates() {
   const now = new Date();
 
   if (cacheRates && lastFetchTime + cacheDuration > now.getTime()) {
@@ -25,3 +25,10 @@ export default async function getCurrencyRates() {
     throw new Error("Помилка отримання курсу валют");
   }
 }
+
+export default async function getCurrencyRates() {
+  return await fetchCurrencyRates();
+}
+
+// Automatically update currency rates at regular intervals
+setInterval(fetchCurrencyRates, cacheDuration);
