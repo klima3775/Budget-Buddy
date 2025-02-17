@@ -6,7 +6,7 @@ import CurrentRateInterface from "../../utils/CurrenRateInterface";
 const currencyNames: { [key: number]: string } = {
   840: "USD",
   978: "EUR",
-  826: "UAH",
+  826: "Gsp",
 };
 
 const ExchangeRate: React.FC = () => {
