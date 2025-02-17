@@ -18,7 +18,22 @@ const ExchangeRate: React.FC = () => {
     const fetchRates = async () => {
       try {
         const response = await axios.get("http://localhost:5000/api/currency");
-        setRates(response.data);
+        const formattedRates = response.data.map((rate: any) => {
+          if (rate.rateCross) {
+            return {
+              currencyCodeA: rate.currencyCodeA,
+              rateBuy: rate.rateCross,
+              rateSell: rate.rateCross,
+            };
+          } else {
+            return {
+              currencyCodeA: rate.currencyCodeA,
+              rateBuy: rate.rateBuy,
+              rateSell: rate.rateSell,
+            };
+          }
+        });
+        setRates(formattedRates);
         setLoading(false);
       } catch (err) {
         setError("Error fetching data");
@@ -39,7 +54,10 @@ const ExchangeRate: React.FC = () => {
   return (
     <div className="exchange-rate">
       {rates.map((rate) => (
-        <div key={rate.currencyCodeA} className="currency">
+        <div
+          key={rate.currencyCodeA}
+          className={`currency ${currencyNames[rate.currencyCodeA]}`}
+        >
           <div>Валюта: {currencyNames[rate.currencyCodeA]}</div>
           <div>Купівля: {rate.rateBuy}</div>
           <div>Продажи: {rate.rateSell}</div>
