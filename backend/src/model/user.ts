@@ -15,19 +15,6 @@ const userSchema: Schema<IUser> = new mongoose.Schema({
   password: { type: String, required: true },
 });
 
-// Хэширование пароля
-// userSchema.pre("save", async function (next) {
-//   const user = this as IUser;
-//   if (!user.isModified("password")) return next();
-//   try {
-//     const salt = await bcrypt.genSalt(10);
-//     user.password = await bcrypt.hash(user.password, salt);
-//     next();
-//   } catch (err) {
-//     next(err as Error);
-//   }
-// });
-
 const User = model<IUser>("User", userSchema);
 
 export default User;

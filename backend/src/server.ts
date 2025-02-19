@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/database.js";
 import authRouter from "./routes/authRoutes.js";
-import currencyRoutes from "./routes/currencyRoutes.js";
+import monoRoutes from "./routes/monoRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -13,7 +13,8 @@ app.use(express.json());
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
 app.use("/api/auth", authRouter);
-app.use("/api/currency", currencyRoutes);
+app.use("/api/mono", monoRoutes);
+app.use("/api/mono", monoRoutes);
 
 app.get("/", (req, res) => {
   res.send("Server is running!");
