@@ -10,9 +10,15 @@ const app = express();
 
 app.use(express.json());
 
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 
 app.use("/api/auth", authRouter);
+app.use("/api/user", authRouter);
 app.use("/api/mono", monoRoutes);
 app.use("/api/mono", monoRoutes);
 

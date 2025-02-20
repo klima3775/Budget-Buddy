@@ -30,19 +30,35 @@ export const register = async (
       res.status(400).json({ message: "Користувач вже існує" });
       return;
     }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const hashedToken = token ? await bcrypt.hash(token, 10) : undefined;
+
     user = new User({
       email,
       password: hashedPassword,
       token: hashedToken,
     }) as IUser;
+
     await user.save();
     const userId = (user._id as unknown as string).toString();
     const accessToken = generateAccessToken(userId);
     const refreshToken = generateRefreshToken(userId);
-    res.cookie("accessToken", accessToken, { httpOnly: true, secure: true });
-    res.cookie("refreshToken", refreshToken, { httpOnly: true, secure: true });
+
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 15 * 60 * 1000,
+    });
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
     res.status(201).json({ userId });
   } catch (error) {
     console.error("Registration error:", error);
@@ -78,8 +94,21 @@ export const login = async (
     const userId = (user._id as unknown as string).toString();
     const accessToken = generateAccessToken(userId);
     const refreshToken = generateRefreshToken(userId);
-    res.cookie("accessToken", accessToken, { httpOnly: true, secure: true });
-    res.cookie("refreshToken", refreshToken, { httpOnly: true, secure: true });
+
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 15 * 60 * 1000,
+    });
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
     res.status(200).json({ userId });
   } catch (error) {
     console.error("Login error:", error);

@@ -40,6 +40,7 @@ const useFormSubmit = (isLogin: boolean, onSubmit: (data: any) => void) => {
             headers: {
               "Content-Type": "application/json",
             },
+            credentials: "include",
             body: JSON.stringify(formData),
           }
         );
