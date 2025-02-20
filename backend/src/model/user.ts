@@ -1,5 +1,4 @@
 import mongoose, { Document, model, Schema } from "mongoose";
-import bcrypt from "bcrypt";
 
 // Интерфейс для пользователя
 export interface IUser extends Document {
