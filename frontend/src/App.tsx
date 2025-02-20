@@ -15,7 +15,6 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   const handleSubmit = (data: any) => {
-    console.log(`${isLogin ? "Login" : "Registration"} successful:`, data);
     setIsAuthenticated(true);
     setIsLogin(null); // Reset to initial state after submission
   };

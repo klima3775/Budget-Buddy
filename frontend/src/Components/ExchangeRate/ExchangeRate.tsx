@@ -17,7 +17,9 @@ const ExchangeRate: React.FC = () => {
   useEffect(() => {
     const fetchRates = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/currency");
+        const response = await axios.get(
+          "http://localhost:5000/api/mono/currency"
+        );
 
         const formattedRates = response.data.map((rate: any) => {
           if (rate.rateCross) {

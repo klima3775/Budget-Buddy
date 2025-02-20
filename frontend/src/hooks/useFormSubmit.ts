@@ -30,8 +30,6 @@ const useFormSubmit = (isLogin: boolean, onSubmit: (data: any) => void) => {
         email,
       };
 
-      console.log("Form submitted with data:", formData);
-
       try {
         const response = await fetch(
           isLogin
