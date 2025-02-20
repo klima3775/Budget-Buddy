@@ -34,14 +34,15 @@ export const register = async (
     }) as IUser;
     await user.save();
     const userId = (user._id as unknown as string).toString();
-    res.status(201).json({ token, userId });
+    const newToken = generateToken(userId);
+    res.status(201).json({ token: newToken, userId });
   } catch (error) {
     res.status(500).json({ message: "Помилка реєстрації", error });
   }
 };
 
 export const login = async (
-  req: Request<{}, {}, IUser>,
+  req: Request<{}, {}, { email: string; password: string }>,
   res: Response
 ): Promise<void> => {
   const errors = validationResult(req);
@@ -50,31 +51,24 @@ export const login = async (
     return;
   }
 
-  const { email, password, token } = req.body;
+  const { email, password } = req.body;
+
   try {
-    const user = await User.findOne({ email });
+    const user = (await User.findOne({ email })) as IUser | null;
     if (!user) {
-      res.status(400).json({ message: "Невірний email або пароль" });
+      res.status(400).json({ message: "Неправильний email або пароль" });
       return;
     }
 
-    const isPasswordMatch = await bcrypt.compare(password, user.password);
-    if (!isPasswordMatch) {
-      res.status(400).json({ message: "Невірний email або пароль" });
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      res.status(400).json({ message: "Неправильний email або пароль" });
       return;
-    }
-
-    if (token) {
-      const isTokenMatch = await bcrypt.compare(token, user.token || "");
-      if (!isTokenMatch) {
-        res.status(400).json({ message: "Невірний токен" });
-        return;
-      }
     }
 
     const userId = (user._id as unknown as string).toString();
-
-    res.json({ token: generateToken(userId), userId: user._id });
+    const token = generateToken(userId);
+    res.status(200).json({ token, userId });
   } catch (error) {
     res.status(500).json({ message: "Помилка входу", error });
   }
