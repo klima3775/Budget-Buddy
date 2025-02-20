@@ -9,7 +9,7 @@ export const generateAccessToken = (id: string): string =>
 
 export const generateRefreshToken = (id: string): string =>
   jwt.sign({ id }, process.env.JWT_REFRESH_SECRET as string, {
-    expiresIn: "7d",
+    expiresIn: "1d",
   });
 
 export const register = async (
@@ -41,7 +41,9 @@ export const register = async (
     const userId = (user._id as unknown as string).toString();
     const accessToken = generateAccessToken(userId);
     const refreshToken = generateRefreshToken(userId);
-    res.status(201).json({ accessToken, refreshToken, userId });
+    res.cookie("accessToken", accessToken, { httpOnly: true, secure: true });
+    res.cookie("refreshToken", refreshToken, { httpOnly: true, secure: true });
+    res.status(201).json({ userId });
   } catch (error) {
     console.error("Registration error:", error);
     res.status(500).json({ message: "Помилка реєстрації", error });
@@ -76,7 +78,9 @@ export const login = async (
     const userId = (user._id as unknown as string).toString();
     const accessToken = generateAccessToken(userId);
     const refreshToken = generateRefreshToken(userId);
-    res.status(200).json({ accessToken, refreshToken, userId });
+    res.cookie("accessToken", accessToken, { httpOnly: true, secure: true });
+    res.cookie("refreshToken", refreshToken, { httpOnly: true, secure: true });
+    res.status(200).json({ userId });
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ message: "Помилка входу", error });
