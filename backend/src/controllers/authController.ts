@@ -4,8 +4,13 @@ import bcrypt from "bcrypt";
 import { validationResult } from "express-validator";
 import User, { IUser } from "../model/user.js";
 
-export const generateToken = (id: string): string =>
-  jwt.sign({ id }, process.env.JWT_SECRET as string, { expiresIn: "7d" });
+export const generateAccessToken = (id: string): string =>
+  jwt.sign({ id }, process.env.JWT_SECRET as string, { expiresIn: "15m" });
+
+export const generateRefreshToken = (id: string): string =>
+  jwt.sign({ id }, process.env.JWT_REFRESH_SECRET as string, {
+    expiresIn: "7d",
+  });
 
 export const register = async (
   req: Request<{}, {}, IUser>,
@@ -34,9 +39,11 @@ export const register = async (
     }) as IUser;
     await user.save();
     const userId = (user._id as unknown as string).toString();
-    const newToken = generateToken(userId);
-    res.status(201).json({ token: newToken, userId });
+    const accessToken = generateAccessToken(userId);
+    const refreshToken = generateRefreshToken(userId);
+    res.status(201).json({ accessToken, refreshToken, userId });
   } catch (error) {
+    console.error("Registration error:", error);
     res.status(500).json({ message: "Помилка реєстрації", error });
   }
 };
@@ -67,9 +74,11 @@ export const login = async (
     }
 
     const userId = (user._id as unknown as string).toString();
-    const token = generateToken(userId);
-    res.status(200).json({ token, userId });
+    const accessToken = generateAccessToken(userId);
+    const refreshToken = generateRefreshToken(userId);
+    res.status(200).json({ accessToken, refreshToken, userId });
   } catch (error) {
+    console.error("Login error:", error);
     res.status(500).json({ message: "Помилка входу", error });
   }
 };
