@@ -4,9 +4,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "npx nodemon",
-    "build": "npm run build && node build/main",
-    "start": ""
+    "dev": "nodemon --inspect -r ts-node/register ./src/server.ts",
+    "build": "rimraf ./build && npx tsc",
+    "start": "npm run build && node build/main"
   },
   "keywords": [],
   "author": "",
