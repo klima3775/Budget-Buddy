@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "npx nodemon",
-    "build": "npm run build && node build/main",
-    "start": ""
+    "build": "rimraf ./build && npx tsc",
+    "start": "npm run build && node build/main"
   },
   "keywords": [],
   "author": "",
