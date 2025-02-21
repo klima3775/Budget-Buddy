@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon --inspect -r ts-node/register ./src/server.ts",
+    "dev": "npx nodemon",
     "build": "rimraf ./build && npx tsc",
     "start": "npm run build && node build/main"
   },
