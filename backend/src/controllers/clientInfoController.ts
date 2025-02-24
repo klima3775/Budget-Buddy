@@ -7,6 +7,6 @@ export default async function clientInfo(req: Request, res: Response) {
 
     res.json(clientInfo);
   } catch (error) {
-    res.status(500).json({ message: "Помилка отримання курсу валют" });
+    res.status(500).json({ message: "Помилка отримання даних клієнта" });
   }
 }
