@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { validationResult } from "express-validator";
 import User, { IUser } from "../model/user.js";
+import { encryptToken } from "../utils/encription.js";
 
 export const generateAccessToken = (id: string): string =>
   jwt.sign({ id }, process.env.JWT_SECRET as string, { expiresIn: "15m" });
@@ -32,12 +33,12 @@ export const register = async (
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const hashedToken = token ? await bcrypt.hash(token, 10) : undefined;
+    const encryptedToken = token ? encryptToken(token) : undefined;
 
     user = new User({
       email,
       password: hashedPassword,
-      token: hashedToken,
+      token: encryptedToken,
     }) as IUser;
 
     await user.save();
