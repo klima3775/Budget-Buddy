@@ -4,9 +4,11 @@ import dotenv from "dotenv";
 import connectDB from "./config/database.js";
 import authRouter from "./routes/authRoutes.js";
 import monoRoutes from "./routes/monoRoutes.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 const app = express();
+app.use(cookieParser());
 
 app.use(express.json());
 

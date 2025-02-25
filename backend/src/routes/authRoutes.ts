@@ -1,8 +1,6 @@
 import express from "express";
 import { body } from "express-validator";
 import { register, login } from "../controllers/authController.js";
-import { authMiddleware } from "../middleware/authMiddleware.js";
-// import { AuthRequest } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
@@ -25,9 +23,5 @@ router.post(
   ],
   login
 );
-
-// router.get("/profile", authMiddleware, (req: AuthRequest, res) => {
-//   res.json({ message: "Приватні дані користувача", user: req.user });
-// });
 
 export default router;
