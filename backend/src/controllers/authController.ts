@@ -28,8 +28,8 @@ export const register = async (
   const { email, password, token } = req.body;
 
   try {
-    let user = (await User.findOne({ email })) as IUser | null;
-    if (user) {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
       res.status(400).json({ message: "Користувач вже існує" });
       return;
     }
@@ -37,14 +37,14 @@ export const register = async (
     const hashedPassword = await bcrypt.hash(password, 10);
     const encryptedToken = token ? encryptToken(token) : undefined;
 
-    user = new User({
+    const newUser = new User({
       email,
       password: hashedPassword,
       token: encryptedToken,
-    }) as IUser;
+    });
 
-    await user.save();
-    const userId = (user._id as unknown as string).toString();
+    await newUser.save();
+    const userId = newUser._id.toString();
     const accessToken = generateAccessToken(userId);
     const refreshToken = generateRefreshToken(userId);
 
@@ -86,7 +86,7 @@ export const login = async (
   const { email, password } = req.body;
 
   try {
-    const user = (await User.findOne({ email })) as IUser | null;
+    const user = await User.findOne({ email });
     if (!user) {
       res.status(400).json({ message: "Неправильний email або пароль" });
       return;
@@ -98,7 +98,7 @@ export const login = async (
       return;
     }
 
-    const userId = (user._id as unknown as string).toString();
+    const userId = user._id.toString();
     const accessToken = generateAccessToken(userId);
     const refreshToken = generateRefreshToken(userId);
 

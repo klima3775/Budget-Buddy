@@ -5,6 +5,7 @@ import connectDB from "./config/database.js";
 import authRouter from "./routes/authRoutes.js";
 import monoRoutes from "./routes/monoRoutes.js";
 import cookieParser from "cookie-parser";
+import "./tasks/updateClientInfoTask.js";
 
 dotenv.config();
 const app = express();

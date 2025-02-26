@@ -1,7 +1,8 @@
-import mongoose, { Document, model, Schema } from "mongoose";
+import mongoose, { Document, model, Schema, ObjectId } from "mongoose";
 
 // Интерфейс для пользователя
 export interface IUser extends Document {
+  _id: ObjectId;
   email: string;
   token?: string;
   password: string;
