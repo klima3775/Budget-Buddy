@@ -4,6 +4,8 @@ import bcrypt from "bcrypt";
 import { validationResult } from "express-validator";
 import User, { IUser } from "../model/user.js";
 import { encryptToken } from "../utils/encription.js";
+import { saveClientInfoToRedis } from "../services/clientInfoService.js";
+import fetchClientInfo from "../services/fetchClientInfo.js";
 
 export const generateAccessToken = (id: string): string =>
   jwt.sign({ id }, process.env.JWT_SECRET as string, { expiresIn: "15m" });
@@ -60,6 +62,10 @@ export const register = async (
       maxAge: 24 * 60 * 60 * 1000,
     });
 
+    // Сохранение информации о клиенте в Redis
+    const clientInfo = await fetchClientInfo(userId);
+    await saveClientInfoToRedis(userId, clientInfo);
+
     res.status(201).json({ userId });
   } catch (error) {
     console.error("Registration error:", error);
@@ -109,6 +115,10 @@ export const login = async (
       sameSite: "strict",
       maxAge: 24 * 60 * 60 * 1000,
     });
+
+    // Сохранение информации о клиенте в Redis
+    const clientInfo = await fetchClientInfo(userId);
+    await saveClientInfoToRedis(userId, clientInfo);
 
     res.status(200).json({ userId });
   } catch (error) {
