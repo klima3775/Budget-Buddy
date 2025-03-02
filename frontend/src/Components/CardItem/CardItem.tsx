@@ -1,6 +1,6 @@
-import CardType from "../../utils/cardsType";
+import CardsType from "../../utils/cardsType";
 
-const CardItem: React.FC<CardType> = ({ card }) => {
+const CardItem: React.FC<{ card: CardsType }> = ({ card }) => {
   const getCurrencySymbol = (currencyCode: number) => {
     return currencyCode === 980 ? "UAN" : "$";
   };
