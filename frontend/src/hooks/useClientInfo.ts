@@ -5,9 +5,12 @@ const useClientInfo = () => {
   return useQuery({
     queryKey: ["clientInfo"],
     queryFn: async () => {
-      const response = await axios.get("/api/client-info", {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        "http://localhost:5000/api/mono/client-info",
+        {
+          withCredentials: true,
+        }
+      );
       return response.data;
     },
     staleTime: 45000,
