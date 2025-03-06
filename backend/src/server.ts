@@ -23,7 +23,6 @@ app.use(
 app.use("/api/auth", authRouter);
 app.use("/api/user", authRouter);
 app.use("/api/mono", monoRoutes);
-app.use("/api/mono", monoRoutes);
 
 app.get("/", (req, res) => {
   res.send("Server is running!");
