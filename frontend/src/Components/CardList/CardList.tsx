@@ -1,6 +1,7 @@
 import CardItem from "../CardItem/CardItem";
 import useClientInfo from "../../hooks/useClientInfo";
 import cardsType from "../../utils/cardsType";
+import "./CardList.scss";
 
 const CardList = () => {
   const { data, isLoading, isError } = useClientInfo();

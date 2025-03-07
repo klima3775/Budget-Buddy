@@ -1,4 +1,5 @@
 import CardsType from "../../utils/cardsType";
+import "./CardItem.scss";
 
 const CardItem: React.FC<{ card: CardsType }> = ({ card }) => {
   const getCurrencySymbol = (currencyCode: number) => {
