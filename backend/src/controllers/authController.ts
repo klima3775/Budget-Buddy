@@ -8,7 +8,7 @@ import { saveClientInfoToRedis } from "../services/clientInfoService.js";
 import fetchClientInfo from "../services/fetchClientInfo.js";
 
 export const generateAccessToken = (id: string): string =>
-  jwt.sign({ id }, process.env.JWT_SECRET as string, { expiresIn: "15m" });
+  jwt.sign({ id }, process.env.JWT_SECRET as string, { expiresIn: "40m" });
 
 export const generateRefreshToken = (id: string): string =>
   jwt.sign({ id }, process.env.JWT_REFRESH_SECRET as string, {
