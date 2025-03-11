@@ -1,4 +1,8 @@
 .card-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: green;
   width: 334px;
   height: 210px;

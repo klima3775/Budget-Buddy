@@ -5,4 +5,5 @@ export default interface CardsType {
   currencyCode: number;
   type: string;
   creditLimit: number;
+  iban: string;
 }
