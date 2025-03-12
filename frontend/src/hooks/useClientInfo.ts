@@ -13,7 +13,7 @@ const useClientInfo = () => {
       );
       return response.data;
     },
-    staleTime: 45000,
+
     refetchInterval: 45000,
   });
 };
