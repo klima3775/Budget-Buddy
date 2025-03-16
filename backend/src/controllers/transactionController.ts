@@ -1,39 +1,43 @@
 import { Request, Response } from "express";
-import monoClient from "../client/monoClient.js";
-import User from "../model/user.js";
-import { decryptToken } from "../utils/encription.js";
+import redis from "../config/redisClient.js";
+import fetchStatement from "../services/fetchStatment.js";
 
-export const getStatement = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const { from, to } = req.query;
-
-  if (!from || !to) {
-    res.status(400).json({ message: "Параметри 'from' та 'to' обов'язкові" });
-    return;
-  }
-
+const getTransactions = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = (req as any).user.id; // Предполагается, что userId доступен в req.user
-    const user = await User.findById(userId);
+    const userId = (req as any).user.id;
+    const { account } = req.params;
 
-    if (!user || !user.token) {
-      res.status(401).json({ message: "Користувач не авторизований" });
+    if (!userId || !account) {
+      res.status(400).json({ message: "Невірні параметри запиту" });
       return;
     }
 
-    const token = decryptToken(user.token);
+    const now = Math.floor(Date.now() / 1000); // Unix timestamp
+    const oneMonthAgo = now - 2682000; // 31 день + 1 час
 
-    const response = await monoClient.get(`/personal/statement/${from}/${to}`, {
-      headers: {
-        "X-Token": token,
-      },
-    });
+    const redisKey = `transactions:${userId}:${account}`;
+    const cachedData = await redis.get(redisKey);
 
-    res.json(response.data);
+    if (cachedData) {
+      res.json(JSON.parse(cachedData));
+      return;
+    }
+
+    const transactions = await fetchStatement(
+      userId,
+      account,
+      oneMonthAgo,
+      now
+    );
+
+    // Кэшируем в Redis на 5 минут
+    await redis.setex(redisKey, 300, JSON.stringify(transactions));
+
+    res.json(transactions);
   } catch (error) {
-    console.error("Помилка отримання виписки:", error);
-    res.status(500).json({ message: "Помилка отримання виписки", error });
+    console.error("Помилка отримання транзакцій:", error);
+    res.status(500).json({ message: "Помилка сервера" });
   }
 };
+
+export default getTransactions;

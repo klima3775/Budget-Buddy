@@ -2,7 +2,7 @@ import express from "express";
 import getCurrency from "../controllers/currencyController.js";
 import getClientInfo from "../controllers/clientInfoController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
-import { getStatement } from "../controllers/transactionController.js";
+import getStatement from "../controllers/transactionController.js";
 
 const router = express.Router();
 
