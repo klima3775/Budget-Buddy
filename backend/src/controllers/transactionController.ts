@@ -5,9 +5,15 @@ import fetchStatement from "../services/fetchStatment.js";
 const getTransactions = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = (req as any).user.id;
-    const { account } = req.params;
+    const account = req.query.account as string;
+    console.log("req.params:", req.params);
+    console.log("req.query:", req.query);
+    console.log("req.body:", req.body);
+    console.log("userId:", userId);
+    console.log("account:", account);
 
     if (!userId || !account) {
+      console.log("Невірні параметри запиту");
       res.status(400).json({ message: "Невірні параметри запиту" });
       return;
     }
