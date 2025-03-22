@@ -17,13 +17,12 @@ const CardItem: React.FC<{ card: CardsType }> = ({ card }) => {
       .then(() => alert("IBAN скопійовано в буфер обміну"))
       .catch((err) => console.error("Помилка копіювання:", err));
   };
-  console.log("card.id:", card.id);
+
   const fetchTransactions = async () => {
     setLoading(true);
     setError(null);
-    console.log("card.id:", card.id);
+
     try {
-      console.log("card.id:", card.id);
       const response = await fetch(
         `http://localhost:5000/api/mono/statement?account=${card.id}`,
 
