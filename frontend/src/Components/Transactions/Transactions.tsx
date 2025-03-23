@@ -1,9 +1,18 @@
 import "./Transactions.scss";
+import { useTransactionsStore } from "../../store/useTransactionsStore";
 
 const Transactions: React.FC = () => {
+  const transactions = useTransactionsStore((state) => state.transactions);
+
   return (
     <div className="transactions">
-      <h1>Test block transaction</h1>
+      <ul>
+        {transactions.map((tx, index) => (
+          <li key={index}>
+            {tx.description}: {tx.amount / 100} UAH
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

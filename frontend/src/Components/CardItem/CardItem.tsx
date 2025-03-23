@@ -1,11 +1,11 @@
-import React, { useState } from "react";
 import CardsType from "../../utils/cardsType";
 import "./CardItem.scss";
+import { useTransactionsStore } from "../../store/useTransactionsStore";
 
 const CardItem: React.FC<{ card: CardsType }> = ({ card }) => {
-  const [transactions, setTransactions] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const setTransactions = useTransactionsStore(
+    (state) => state.setTransactions
+  );
 
   const getCurrencySymbol = (currencyCode: number) => {
     return currencyCode === 980 ? "UAH" : "$";
@@ -19,9 +19,6 @@ const CardItem: React.FC<{ card: CardsType }> = ({ card }) => {
   };
 
   const fetchTransactions = async () => {
-    setLoading(true);
-    setError(null);
-
     try {
       const response = await fetch(
         `http://localhost:5000/api/mono/statement?account=${card.id}`,
@@ -37,9 +34,7 @@ const CardItem: React.FC<{ card: CardsType }> = ({ card }) => {
       const data = await response.json();
       setTransactions(data);
     } catch (err) {
-      setError((err as Error).message);
-    } finally {
-      setLoading(false);
+      console.error(err);
     }
   };
 
@@ -61,19 +56,6 @@ const CardItem: React.FC<{ card: CardsType }> = ({ card }) => {
       >
         Копіювати IBAN
       </button>
-
-      {loading && <p>Завантаження транзакцій...</p>}
-      {error && <p className="error">{error}</p>}
-      {transactions.length > 0 && (
-        <ul>
-          {transactions.map((tx, index) => (
-            <li key={index}>
-              {tx.description}: {tx.amount / 100}{" "}
-              {getCurrencySymbol(card.currencyCode)}
-            </li>
-          ))}
-        </ul>
-      )}
     </div>
   );
 };
