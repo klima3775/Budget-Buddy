@@ -6,13 +6,17 @@ const Transactions: React.FC = () => {
 
   return (
     <div className="transactions">
-      <ul>
-        {transactions.map((tx, index) => (
-          <li key={index}>
-            {tx.description}: {tx.amount / 100} UAH
-          </li>
-        ))}
-      </ul>
+      {transactions.length > 0 ? (
+        <ul>
+          {transactions.map((tx, index) => (
+            <li key={index}>
+              {tx.description}: {tx.amount / 100} UAH
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No transactions available</p>
+      )}
     </div>
   );
 };
