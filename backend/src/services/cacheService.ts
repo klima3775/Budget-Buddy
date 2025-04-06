@@ -17,8 +17,11 @@ const updateIntervals: { [key: string]: CacheEntry } = {};
 // Обновление данных в MongoDB и синхронизация с Redis
 const updateTransactions = async (userId: string, account: string) => {
   try {
-    const now = Math.floor(Date.now() / 1000);
-    const oneMonthAgo = now - 2682000; // 31 день
+    const now = new Date();
+    const startOfMonth =
+      new Date(now.getFullYear(), now.getMonth(), 1).getTime() / 1000; // Начало месяца в секундах
+
+    const endOfMonth = new Date();
     const redisKey = `transactions:${userId}:${account}`;
 
     // Получаем новые данные из API

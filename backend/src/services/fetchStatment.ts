@@ -17,6 +17,12 @@ export default async function fetchStatement(
 
     const token = decryptToken(user.token);
 
+    console.log(
+      `➡️ Monobank API request: /personal/statement/${account}/${from}/${to}`
+    );
+    console.log(`🕒 From (unix): ${from}, To (unix): ${to}`);
+    console.log(`📅 From (date): ${new Date(from * 1000).toISOString()}`);
+    console.log(`📅 To (date): ${new Date(to * 1000).toISOString()}`);
     const response = await monoClient.get(
       `/personal/statement/${account}/${from}/${to}`,
       {
@@ -24,6 +30,7 @@ export default async function fetchStatement(
       }
     );
 
+    console.log("Monobank Response:", response.data);
     return response.data;
   } catch (error) {
     throw new Error("Помилка отримання виписки");
